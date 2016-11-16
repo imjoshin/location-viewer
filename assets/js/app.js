@@ -1,9 +1,13 @@
 $(document).on("ready", function(){
+  var isMobile = false;
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    isMobile = true;
+  }
   var map, heatmap;
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 44.3894133 , lng: -84.5751897},
-    zoom: 7
+    zoom: (isMobile ? 5 : 7)
   });
 
 
@@ -20,7 +24,6 @@ $(document).on("ready", function(){
       },
       cache: false,
       success: function(data) {
-        console.log(data);
         data.forEach(function(point){
           points.push(new google.maps.LatLng(point["lat"], point["lng"]));
         });
@@ -30,24 +33,25 @@ $(document).on("ready", function(){
           map: map,
           radius: 25,
           opacity: .9,
-          maxIntensity: 70
+          maxIntensity: (isMobile ? 750 : 120)
         });
 
         google.maps.event.addListener(map, 'zoom_changed', zoomChanged);
 
         $("#loading").fadeOut(300);
+      },
+      error: function(data){
+        System.out.println("An error occured while loading the data.\nPlease refresh the page.");
       }
     });
   }
 
   function zoomChanged(){
     zoomLevel = map.getZoom();
-    if (zoomLevel >= 7) {
-      console.log("Changed to 120");
-      heatmap.set("maxIntensity", 120);
+    if (zoomLevel > (isMobile ? 5 : 7)) {
+      heatmap.set("maxIntensity", (isMobile ? 750 : 120));
     } else {
-      console.log("Changed to 250");
-      heatmap.set("maxIntensity", 250);
+      heatmap.set("maxIntensity", (isMobile ? 1000 : 500));
     }
   }
 });
