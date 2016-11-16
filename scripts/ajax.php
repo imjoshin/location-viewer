@@ -2,8 +2,8 @@
 include "functions.php";
 $action = $_POST["action"];
 
-if($action == "func"){
-  echo func();
+if($action == "getPoints"){
+  echo getPoints();
 }
 
 ?>
