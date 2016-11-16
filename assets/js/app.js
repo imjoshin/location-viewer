@@ -2,6 +2,10 @@ $(document).on("ready", function(){
   var isMobile = false;
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     isMobile = true;
+    $("#info").css({
+      "font-size": "16px",
+      "top": "50px"
+    });
   }
   var map, heatmap;
 
