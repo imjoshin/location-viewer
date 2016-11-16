@@ -34,6 +34,8 @@ $(document).on("ready", function(){
         });
 
         google.maps.event.addListener(map, 'zoom_changed', zoomChanged);
+
+        $("#loading").fadeOut(300);
       }
     });
   }
