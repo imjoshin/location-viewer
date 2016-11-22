@@ -19,6 +19,7 @@ $(document).on("ready", function(){
 
   function showHeatmap(){
     var points = [];
+
     $.ajax({
       type: "POST",
       dataType: "json",
@@ -42,17 +43,17 @@ $(document).on("ready", function(){
 
         google.maps.event.addListener(map, 'zoom_changed', zoomChanged);
 
-        $("#loading").fadeOut(300);
+        $("#loading").hide();
       },
       error: function(data){
-        System.out.println("An error occured while loading the data.\nPlease refresh the page.");
+        alert("An error occured while loading the data.\nPlease refresh the page.");
       }
     });
   }
 
   function zoomChanged(){
     zoomLevel = map.getZoom();
-    if (zoomLevel > (isMobile ? 5 : 7)) {
+    if (zoomLevel >= (isMobile ? 5 : 7)) {
       heatmap.set("maxIntensity", (isMobile ? 750 : 120));
     } else {
       heatmap.set("maxIntensity", (isMobile ? 1000 : 500));
